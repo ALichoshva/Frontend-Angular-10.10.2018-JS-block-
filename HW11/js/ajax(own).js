@@ -3,7 +3,7 @@ class CustomHttp {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', url);
         xhr.send();
-        xhr.addEventListener('load', () => callback(xhr.responseText));
+        xhr.addEventListener('load', () => callback(JSON.parse(xhr.responseText)));
     }
 };
 
@@ -13,26 +13,25 @@ let nameWrapper = document.querySelector('.name-wrapper');
 let infoWrapper = document.querySelector('.info-wrapper');
 
 httpClient.get('https://jsonplaceholder.typicode.com/users', (response) => {
-    let responseArr = JSON.parse(response);
-    console.log(responseArr);
+    console.log(response);
 
-    for (let i = 0; i < responseArr.length; i++) {
+    for (let i = 0; i < response.length; i++) {
         nameWrapper.insertAdjacentHTML('beforeend', `
-            <a class="waves-effect waves-light btn" id="${responseArr[i].id}">
-                ${responseArr[i].name}
+            <a class="waves-effect waves-light btn" id="${response[i].id}">
+                ${response[i].name}
             </a>
             `)
     }
 
-    for (let i = 0; i < responseArr.length; i++) {
+    for (let i = 0; i < response.length; i++) {
         infoWrapper.insertAdjacentHTML('beforeend', `
-            <div class="collection d-none" data-id="${responseArr[i].id}">
+            <div class="collection d-none" data-id="${response[i].id}">
                 <h4 class="title">User information</h1>
                 <div class="user-info">
-                    <p>name: ${responseArr[i].name}</p>
-                    <p>phone: ${responseArr[i].phone}</p>
-                    <p>username: ${responseArr[i].username}</p>
-                    <p>website: ${responseArr[i].website}</p>
+                    <p>name: ${response[i].name}</p>
+                    <p>phone: ${response[i].phone}</p>
+                    <p>username: ${response[i].username}</p>
+                    <p>website: ${response[i].website}</p>
                 </div>
             </div>
         `)

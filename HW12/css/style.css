@@ -1,0 +1,9 @@
+.custom-error {
+    color: white;
+    border: 1px solid rgb(146, 1, 1);
+    background-color: red;
+    width: 300px;
+    height: 50px;
+    text-align: center;
+    margin: 0 auto;
+}

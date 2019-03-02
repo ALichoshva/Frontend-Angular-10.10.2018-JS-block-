@@ -61,21 +61,23 @@ export class SignUpComponent {
             const dateOfBirthMonth = e.target.elements['date_of_birth_month'].value;
             const dateOfBirthYear = e.target.elements['date_of_birth_year'].value;
 
-            if (!email || !password || !nickname || !firstName || !lastName || !phone || !genderOrientation || !city || !country || !dateOfBirthDay || !dateOfBirthMonth || !dateOfBirthYear) return;
-
             const signUpInfo = {
-                email: `${email}`,
-                password: `${password}`,
-                nickname: `${nickname}`,
-                first_name: `${firstName}`,
-                last_name: `${lastName}`,
-                phone: `${phone}`,
-                gender_orientation: `${genderOrientation}`,
-                city: `${city}`,
-                country: `${country}`,
-                date_of_birth_day: `${dateOfBirthDay}`,
-                date_of_birth_month: `${dateOfBirthMonth}`,
-                date_of_birth_year: `${dateOfBirthYear}`
+                email: email,
+                password: password,
+                nickname: nickname,
+                first_name: firstName,
+                last_name: lastName,
+                phone: phone,
+                gender_orientation: genderOrientation,
+                city: city,
+                country: country,
+                date_of_birth_day: dateOfBirthDay,
+                date_of_birth_month: dateOfBirthMonth,
+                date_of_birth_year: dateOfBirthYear
+            }
+
+            for(let item in signUpInfo) {
+                if (Boolean(signUpInfo[item]) === false) return
             }
             
             this._authService.signUp(signUpInfo)

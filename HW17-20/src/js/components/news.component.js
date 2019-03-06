@@ -11,11 +11,6 @@ export class NewsComponent {
     }
 
     async beforeRender() {
-        if (!this._authService.token) {
-            this._routing.navigate(`/login`);
-            throw 'Please login to acces private data';
-        }
-
         this._news = await this._newsService.getNews(this._authService.token);
     }
 

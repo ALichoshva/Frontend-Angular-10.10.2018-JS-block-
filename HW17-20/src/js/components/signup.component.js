@@ -13,8 +13,8 @@ export class SignUpComponent {
         return `
         <div class="auth-wrap d-flex mt-5">
             <div class="auth-form col col-6 mx-auto my-auto">
-                <h3>Login to Social.</h3>
-                <p class="text-secondary">Enter your e-mail address & password to login to your Social account.</p>
+                <h3>SignUp Social.</h3>
+                <p class="text-secondary">Enter all necessary information below to signUp to your Social account.</p>
                 <form name="loginForm" novalidate>
                     <div class="form-group">
                         <input type="email" class="form-control form-control-sm" id="email" placeholder="name@example.com" required data-pattern="^\S+@[a-z]+\.[a-z]+$">

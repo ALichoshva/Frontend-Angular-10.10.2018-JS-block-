@@ -1,30 +1,74 @@
+// add components
 import { LoginComponent } from './components/login.component';
 import { HomeComponent } from './components/home.component';
 import { NotFoundComponent } from './components/notfound.component';
 import { SignUpComponent } from './components/signup.component';
 import { UserComponent } from './components/user.component';
-import { ActiveRoute } from './core/activeRoute.service';
 import { NewsComponent } from './components/news.component';
+import { NavbarComponent } from './components/navbar.component';
+import { WinnersComponent } from './components/winners.component';
+// add services
+import { ActiveRoute } from './core/activeRoute.service';
+import { AuthGuard } from './guards/auth.guard';
 
-// add /signup route and SignUpComponent
+// add SignUpComponent
 // add NewsComponent and route, news.service.js, change get() method in http.service.js
+// add WinnersComponent, winners.service.js
+
 const routes = {
-    '/': new HomeComponent(),
-    '/login': new LoginComponent(),
-    '/signup': new SignUpComponent(),
-    '/users/:id': new UserComponent(),
-    '/news': new NewsComponent(),
-    '**': new NotFoundComponent()
-};
+    '/': {
+        component: new HomeComponent(),
+        guard: new AuthGuard()
+    },
+
+    '/login': {
+        component: new LoginComponent()
+    },
+
+    '/signup': {
+        component: new SignUpComponent(),
+    },
+
+    '/users/:id': {
+        component: new UserComponent(),
+        guard: new AuthGuard()
+    },
+
+    '/news': {
+        component: new NewsComponent(),
+        guard: new AuthGuard()
+    },
+
+    '**': {
+        component: new NotFoundComponent()
+    },
+
+    '/winners': {
+        component: new WinnersComponent()
+    }
+}
 
 const activeRoute = new ActiveRoute();
 
 const router = async () => {
+    // Get content container and header container
     const container = document.querySelector('app-container');
+    const header = document.querySelector('app-header')
+    // Get active route
     const request = activeRoute.parseRequestURL();
     const url = (request.resourse ? '/' + request.resourse : '/') + (request.id ? '/:id' : '');
+    // Get component by route
+    const component = routes[url] ? routes[url]['component'] : routes['**']['component'];
+    const guard = routes[url] ? routes[url]['guard'] : null;
+    // Check guard
+    if (guard && !guard.check()) return;
+  
+    if (header) {
+        const navbarComponent = new NavbarComponent();
+        header.innerHTML = navbarComponent.render();
+        navbarComponent.afterRender();
+    }
 
-    const component = routes[url] || routes['**']; 
     await component.beforeRender();
     container.innerHTML = component.render();
     component.afterRender();

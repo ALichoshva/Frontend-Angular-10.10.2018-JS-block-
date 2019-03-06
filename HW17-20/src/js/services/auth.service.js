@@ -35,4 +35,13 @@ export class AuthService {
                 .catch((err) => reject(err));
         });
     }
+
+    logout() {
+        return new Promise((resolve, reject) => {
+            localStorage.removeItem('sn_user_id');
+            localStorage.removeItem('sn_user_token');
+
+            resolve();
+        }); 
+    }
 }

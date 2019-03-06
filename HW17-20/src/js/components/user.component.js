@@ -14,10 +14,6 @@ export class UserComponent {
     }
 
     async beforeRender() {
-        if (!this._authService.token) {
-            this._routing.navigate('/login');
-            throw 'Please login to acces private data';
-        }
         this._user = await this._userService.getUser(this._authService.userId);
     }
 
